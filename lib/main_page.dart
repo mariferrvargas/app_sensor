@@ -28,9 +28,43 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _receiveData() {
+    const splitter = LineSplitter();
+    // _connection?.input?.listen((Uint8List data) {
+    //   // debugPrint('Data incoming: ${ascii.decode(data)} + ${data.length}');
+    //   int value = 0;
+    //   if (data.length == 2) {
+    //     value =
+    //         (data[0] << 8) + data[1]; // Combine two bytes into a uint16 value
+    //     debugPrint('SIII');
+    //   } else {
+    //     value = int.parse(ascii.decode(data));
+    //   }
+    //   // debugPrint('Data incoming: $value');
+    //   setState(() => times = value.toString());
+    //   // debugPrint("  ");
+    //   // print(event);
+    // });
     _connection?.input?.listen((Uint8List data) {
-      setState(() => times = ascii.decode(data));
-      // print(event);
+      if (data.length > 2) {
+        debugPrint('raw data: $data');
+        debugPrint('ascii data: ${ascii.decode(data)}');
+        debugPrint('String data: ${String.fromCharCodes(data)}');
+        var stringList = splitter.convert(String.fromCharCodes(data));
+        debugPrint(
+            'Splitter string data: $stringList');
+        var largestVal = int.parse(stringList[0]);
+        for (var i = 0; i < stringList.length ; i++) {
+          var stringListInt = int.parse(stringList[i]);
+          if (stringListInt > largestVal) {
+            largestVal = stringListInt;
+          }
+        }
+        debugPrint('Unique value: $largestVal');
+        debugPrint('------------------------------------------------');
+        setState(() =>
+            times = largestVal.toString());
+      }
+      // setState(() => times = ascii.decode(data));
     });
   }
 
@@ -85,7 +119,7 @@ class _MainPageState extends State<MainPage> {
           _infoDevice(),
           Expanded(child: _listDevices()),
           _inputSerial(),
-          LiveLineChart(),
+          LiveLineChart(times),
           // _buttons(),
         ],
       ),

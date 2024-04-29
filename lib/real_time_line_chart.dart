@@ -1,6 +1,7 @@
 /// Dart imports
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 
 /// Package imports
 import 'package:flutter/material.dart';
@@ -12,16 +13,18 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_application/sample_view.dart';
 
 /// Renders the realtime line chart sample.
-class LiveLineChart extends SampleView {
+class LiveLineChart extends StatefulWidget {
   /// Creates the realtime line chart sample.
-  const LiveLineChart({super.key});
+  const LiveLineChart(this.times,{super.key});
+
+  final String times;
 
   @override
   _LiveLineChartState createState() => _LiveLineChartState();
 }
 
 /// State class of the realtime line chart.
-class _LiveLineChartState extends SampleViewState {
+class _LiveLineChartState extends State<LiveLineChart> {
   _LiveLineChartState() {
     timer =
         Timer.periodic(const Duration(milliseconds: 200), _updateDataSource);
@@ -44,25 +47,25 @@ class _LiveLineChartState extends SampleViewState {
   void initState() {
     count = 19;
     chartData = <_ChartData>[
-      _ChartData(0, 42),
-      _ChartData(1, 47),
-      _ChartData(2, 33),
-      _ChartData(3, 49),
-      _ChartData(4, 54),
-      _ChartData(5, 41),
-      _ChartData(6, 58),
-      _ChartData(7, 51),
-      _ChartData(8, 98),
-      _ChartData(9, 41),
-      _ChartData(10, 53),
-      _ChartData(11, 72),
-      _ChartData(12, 86),
-      _ChartData(13, 52),
-      _ChartData(14, 94),
-      _ChartData(15, 92),
-      _ChartData(16, 86),
-      _ChartData(17, 72),
-      _ChartData(18, 94),
+      _ChartData(0, 0),
+      _ChartData(1, 0),
+      _ChartData(2, 0),
+      _ChartData(3, 0),
+      _ChartData(4, 0),
+      _ChartData(5, 0),
+      _ChartData(6, 0),
+      _ChartData(7, 0),
+      _ChartData(8, 0),
+      _ChartData(9, 0),
+      _ChartData(10, 0),
+      _ChartData(11, 0),
+      _ChartData(12, 0),
+      _ChartData(13, 0),
+      _ChartData(14, 0),
+      _ChartData(15, 0),
+      _ChartData(16, 0),
+      _ChartData(17, 0),
+      _ChartData(18, 0),
     ];
     super.initState();
   }
@@ -98,8 +101,10 @@ class _LiveLineChartState extends SampleViewState {
 
   ///Continuously updating the data source based on timer
   void _updateDataSource(Timer timer) {
+    // debugPrint(int.parse(widget.times).toString());
     // if (isCardView != null) {
-      chartData!.add(_ChartData(count, _getRandomInt(10, 100)));
+      // chartData!.add(_ChartData(count, _getRandomInt(10, 100)));
+      chartData!.add(_ChartData(count, int.parse(widget.times) > 10 ? int.parse(widget.times) : 0));
       if (chartData!.length == 20) {
         chartData!.removeAt(0);
         _chartSeriesController?.updateDataSource(
