@@ -105,9 +105,7 @@ class LocalizationSampleViewState<T extends LocalizationSampleView>
                       localeString =
                           (localeString == 'ar_AE') ? 'Arabic' : 'English';
                     } else {
-                      localeString = localeString.substring(0, 2) +
-                          '-' +
-                          localeString.substring(3, 5);
+                      localeString = '${localeString.substring(0, 2)}-${localeString.substring(3, 5)}';
                     }
 
                     return DropdownMenuItem<Locale>(

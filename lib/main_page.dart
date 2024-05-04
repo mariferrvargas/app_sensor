@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter_application/widgets/action_button.dart';
 import 'package:flutter_application/real_time_line_chart.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final _bluetooth = FlutterBluetoothSerial.instance;
-  bool _bluetoothState = false;
+  final bool _bluetoothState = false;
   bool _isConnecting = false;
   BluetoothConnection? _connection;
   List<BluetoothDevice> _devices = [];
@@ -201,7 +200,7 @@ class _MainPageState extends State<MainPage> {
   Widget _inputSerial() {
     return ListTile(
       dense: true,
-      visualDensity: VisualDensity(vertical: -3),
+      visualDensity: const VisualDensity(vertical: -3),
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Text(

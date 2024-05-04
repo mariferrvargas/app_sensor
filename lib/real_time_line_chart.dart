@@ -1,7 +1,7 @@
 /// Dart imports
+library;
 import 'dart:async';
 import 'dart:math' as math;
-import 'package:flutter/foundation.dart';
 
 /// Package imports
 import 'package:flutter/material.dart';
@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-/// Local imports
-import 'package:flutter_application/sample_view.dart';
 
 /// Renders the realtime line chart sample.
 class LiveLineChart extends StatefulWidget {
