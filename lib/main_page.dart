@@ -110,8 +110,16 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding (
+          padding: const EdgeInsets.only(left: 5.0),
+          child: Image.asset(
+            'assets/trazo.png',
+            //fit: BoxFit.fitWidth,
+          ),
+        ),
         centerTitle: true,
-        title: const Text('Flutter and Arduino'),
+        title: const Text('Cardio Tracker'),
+        backgroundColor: const Color.fromARGB(255, 180, 216, 246),
       ),
       body: Column(
         children: [
@@ -145,6 +153,7 @@ class _MainPageState extends State<MainPage> {
   Widget _infoDevice() {
     return ListTile(
       tileColor: Colors.black12,
+      leading: const Icon(Icons.bluetooth),
       title: Text("Conectado a: ${_deviceConnected?.name ?? "ninguno"}"),
       trailing: _connection?.isConnected ?? false
           ? TextButton(
@@ -204,7 +213,7 @@ class _MainPageState extends State<MainPage> {
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Text(
-          "Valor = $times",
+          "Latidos por minuto = $times",
           style: const TextStyle(fontSize: 18.0),
         ),
       ),
