@@ -12,6 +12,57 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+class HeartBeatAnimation extends StatefulWidget {
+  @override
+  _HeartBeatAnimationState createState() => _HeartBeatAnimationState();
+}
+
+class _HeartBeatAnimationState extends State<HeartBeatAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _animationController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          _animationController.forward();
+        }
+      });
+
+    // Inicia la animación
+    _animationController.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: 1.0 - _animationController.value * 0.2,
+          child: Icon(
+            Icons.favorite,
+            color: const Color.fromARGB(255, 195, 51, 40),
+            size: 200,
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+}
+
 class _MainPageState extends State<MainPage> {
   final _bluetooth = FlutterBluetoothSerial.instance;
   final bool _bluetoothState = false;
@@ -207,16 +258,23 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _inputSerial() {
-    return ListTile(
-      dense: true,
-      visualDensity: const VisualDensity(vertical: -3),
-      title: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Text(
-          "Latidos por minuto = $times",
-          style: const TextStyle(fontSize: 18.0),
+    return Column(
+      children: [
+        ListTile(
+          dense: true,
+          visualDensity: const VisualDensity(vertical: -3),
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              "Latidos por minuto = $times",
+              style: const TextStyle(fontSize: 18.0),
+            ),
+          ),
         ),
-      ),
+        SizedBox(height: 20),
+        HeartBeatAnimation(),
+      ],
     );
   }
+}
 }
