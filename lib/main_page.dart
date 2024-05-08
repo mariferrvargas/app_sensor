@@ -277,8 +277,10 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           // Agregar aquí cualquier otro widget que desees mostrar como parte de la alerta
-          SizedBox(height: 20),
-          HeartBeatAnimation(),
+          SizedBox(height: 5),
+          Image.asset(
+          'assets/alarma.png',
+          fit: BoxFit.fitWidth),
         ],
       );
     } else {
