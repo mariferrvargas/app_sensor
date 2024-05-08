@@ -100,10 +100,9 @@ class _MainPageState extends State<MainPage> {
         debugPrint('ascii data: ${ascii.decode(data)}');
         debugPrint('String data: ${String.fromCharCodes(data)}');
         var stringList = splitter.convert(String.fromCharCodes(data));
-        debugPrint(
-            'Splitter string data: $stringList');
+        debugPrint('Splitter string data: $stringList');
         var largestVal = int.parse(stringList[0]);
-        for (var i = 0; i < stringList.length ; i++) {
+        for (var i = 0; i < stringList.length; i++) {
           var stringListInt = int.parse(stringList[i]);
           if (stringListInt > largestVal) {
             largestVal = stringListInt;
@@ -111,8 +110,7 @@ class _MainPageState extends State<MainPage> {
         }
         debugPrint('Unique value: $largestVal');
         debugPrint('------------------------------------------------');
-        setState(() =>
-            times = largestVal.toString());
+        setState(() => times = largestVal.toString());
       }
       // setState(() => times = ascii.decode(data));
     });
@@ -161,7 +159,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding (
+        leading: Padding(
           padding: const EdgeInsets.only(left: 5.0),
           child: Image.asset(
             'assets/trazo.png',
@@ -258,23 +256,51 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _inputSerial() {
-    return Column(
-      children: [
-        ListTile(
-          dense: true,
-          visualDensity: const VisualDensity(vertical: -3),
-          title: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Text(
-              "Latidos por minuto = $times",
-              style: const TextStyle(fontSize: 18.0),
+    Color textColor = Colors.black;
+
+    // Verificar si times es mayor a 140 o menor a 50 para cambiar el color del texto
+    if (int.parse(times) > 140 || int.parse(times) < 50) {
+      textColor = Colors.red; // Cambiar a rojo si la condición se cumple
+      return Column(
+        children: [
+          ListTile(
+            dense: true,
+            visualDensity: const VisualDensity(vertical: -3),
+            title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                "¡Alerta! Latidos por minuto fuera del rango: $times",
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: textColor), // Aplicar el color al texto
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 20),
-        HeartBeatAnimation(),
-      ],
-    );
+          // Agregar aquí cualquier otro widget que desees mostrar como parte de la alerta
+          SizedBox(height: 20),
+          HeartBeatAnimation(),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          ListTile(
+            dense: true,
+            visualDensity: const VisualDensity(vertical: -3),
+            title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                "Latidos por minuto = $times",
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: textColor), // Aplicar el color al texto
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          HeartBeatAnimation(),
+        ],
+      );
+    }
   }
-}
 }
