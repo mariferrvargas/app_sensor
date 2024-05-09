@@ -22,3 +22,5 @@ analógica del sensor en una señal digital por medio del ADC.
 cardíaca ha sido calculada, los datos se envían a un dispositivo móvil mediante 
 un módulo Bluetooth (HC-06). Esto permite la visualización de la frecuencia cardíaca e
 en la aplicación móvil.
+
+Link al video: https://drive.google.com/file/d/1Q3-xYH3dY4dMwMeIAGFy2AsEzRq7_B4M/view?usp=sharing
